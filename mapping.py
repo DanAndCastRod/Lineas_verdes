@@ -1,6 +1,30 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
+import noise
+
+def generar_mundo(n,m,scale, octaves, persistance, lacunarity, seed):
+    shape = (n,m)
+    scale = scale
+    octaves = octaves
+    persistance = persistance
+    lacunarity = lacunarity
+    seed = seed
+    world = np.zeros(shape)
+    for i in range(shape[0]):
+        for j in range(shape[1]):
+            world[i,j] = noise.pnoise2(
+                i/scale,
+                j/scale,
+                octaves = octaves,
+                persistence = persistance,
+                lacunarity = lacunarity,
+                base = seed
+            )
+
+
+    world = world/(np.max(world)- np.min(world))*2
+
 
 def crear_mapa_de_calor(n, m, k):
     # Generar matriz aleatoria de nxm con valores de 0 a k
@@ -110,4 +134,37 @@ def crear_mapa_de_calor_vial():
     # Mostrar mapa de calor
     plt.show()
 
+
+
+
+def microzonas(world, shape, sensibility):
+    microzonas = np.zeros(shape)
+    cmap_microzonas = ListedColormap(['#000','#fff',"#ff0000","#0f0"])
+    for i in range(shape[0]):
+        for j in range(shape[1]):
+            if world[i,j] > sensibility or world[i,j] < -sensibility :
+                microzonas[i,j] = 0
+            else: microzonas[i,j] = 1
+
+    for i in range(100):
+        randomcoor = (np.random.randint(0,shape[0]),np.random.randint(0,shape[1]))
+        if microzonas[randomcoor] == 1:
+            microzonas[randomcoor] =2
+            break
+
+    for i in range(100):
+        randomcoor = (np.random.randint(0,shape[0]),np.random.randint(0,shape[1]))
+        if microzonas[randomcoor] == 1:
+            microzonas[randomcoor] =3
+            break
+    return microzonas, cmap_microzonas
+
+def print_zeros(n):
+    for i in range(n):
+        print(0)
+    
+def mostrar_mapa( mapa, cmap):
+    fig, ax = plt.subplots()
+    im = ax.imshow(mapa, cmap=cmap)
+    im.figure.colorbar(im)
 
