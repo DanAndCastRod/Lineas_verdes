@@ -24,7 +24,8 @@ def generar_mundo(n,m,scale, octaves, persistance, lacunarity, seed):
 
 
     world = world/(np.max(world)- np.min(world))*2
-
+    return world
+    
 
 def crear_mapa_de_calor(n, m, k):
     # Generar matriz aleatoria de nxm con valores de 0 a k
