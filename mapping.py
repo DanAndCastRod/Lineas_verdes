@@ -2,6 +2,29 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 import noise
+import math
+
+def mostrar_mapas(mapas, cmap):
+    n = int(np.ceil(np.sqrt(len(mapas)))) # calcular el tamaño del grid
+    fig, axs = plt.subplots(n, n, figsize=(10, 10)) # crear la figura y los ejes
+    axs = axs.flatten() # aplanar los ejes para iterar sobre ellos
+
+    for i, mapa in enumerate(mapas):
+        im = axs[i].imshow(mapa, cmap=cmap) # mostrar el mapa en el eje correspondiente
+        axs[i].set_title(f"Mapa {i+1}") # establecer el título del eje
+        fig.colorbar(im, ax=axs[i]) # agregar la barra de color al eje
+
+    # eliminar los ejes vacíos del grid
+    for i in range(len(mapas), n*n):
+        fig.delaxes(axs[i])
+
+    fig.tight_layout() # ajustar el diseño de la figura
+    plt.show() # mostrar la figura
+
+def mostrar_mapa( mapa, cmap):
+    fig, ax = plt.subplots()
+    im = ax.imshow(mapa, cmap=cmap)
+    im.figure.colorbar(im)
 
 def generar_mundo(n,m,scale, octaves, persistance, lacunarity, seed):
     shape = (n,m)
@@ -25,120 +48,8 @@ def generar_mundo(n,m,scale, octaves, persistance, lacunarity, seed):
 
     world = world/(np.max(world)- np.min(world))*2
     return world
-    
 
-def crear_mapa_de_calor(n, m, k):
-    # Generar matriz aleatoria de nxm con valores de 0 a k
-    vegetacion = np.random.randint(k, size = (n,m))
-
-    # paleta de colores
-    verde = ['#C7EA46', '#9ED14A', '#6FBF4A', '#4DAF4A', '#2D9440', '#157F3E']
-    cmap = ListedColormap(verde)
-
-    # Crear mapa de calor
-    fig, ax = plt.subplots()
-    im = ax.imshow(vegetacion, cmap = cmap)
-    
-
-    ## Añadir leyenda
-    cbar = ax.figure.colorbar(im, ax = ax)
-    cbar.ax.set_ylabel("Nivel de vegetación", rotation = -90, va = 'bottom')
-
-    plt.show()
-
-
-def crear_mapa_de_calor_relieve():
-    # Generar matriz aleatoria de 100x100 con valores entre 0 y 1
-    relieve = np.random.rand(100, 100)
-
-    # Convertir matriz aleatoria en relieve utilizando función sigmoidal
-    relieve = 1 / (1 + np.exp(-10*(relieve-0.5)))
-
-    # Crear paleta de colores para relieve
-    marron = ['#E7CBA9', '#CEAA7B', '#B5874E', '#965927', '#603813']
-    cmap = ListedColormap(marron)
-
-    # Crear mapa de calor para relieve
-    fig, ax = plt.subplots()
-    im = ax.imshow(relieve, cmap=cmap)
-
-    # Añadir leyenda
-    cbar = ax.figure.colorbar(im, ax=ax)
-    cbar.ax.set_ylabel("Relieve", rotation=-90, va="bottom")
-
-    # Mostrar mapa de calor
-    plt.show()
-
-def crear_mapa_de_calor_hidrico():
-    # Generar matriz aleatoria de 100x100 con valores entre 0 y 1
-    hidrico = np.random.rand(100, 100)
-
-    # Convertir matriz aleatoria en recursos hídricos utilizando función sigmoidal
-    hidrico = 1 / (1 + np.exp(-10*(hidrico-0.5)))
-
-    # Crear paleta de colores para recursos hídricos
-    azul = ['#D7EFFF', '#A4C8FF', '#6AAFFF', '#2674FF', '#0045B5']
-    cmap = ListedColormap(azul)
-
-    # Crear mapa de calor para recursos hídricos
-    fig, ax = plt.subplots()
-    im = ax.imshow(hidrico, cmap=cmap)
-
-    # Añadir leyenda
-    cbar = ax.figure.colorbar(im, ax=ax)
-    cbar.ax.set_ylabel("Recursos hídricos", rotation=-90, va="bottom")
-
-    # Mostrar mapa de calor
-    plt.show()
-
-def crear_mapa_de_calor_boscoso():
-    # Generar matriz aleatoria de 100x100 con valores entre 0 y 1
-    boscoso = np.random.rand(100, 100)
-
-    # Convertir matriz aleatoria en zonas boscosas utilizando función sigmoidal
-    boscoso = 1 / (1 + np.exp(-10*(boscoso-0.5)))
-
-    # Crear paleta de colores para zonas boscosas
-    verde = ['#C7EA46', '#9ED14A', '#6FBF4A', '#4DAF4A', '#2D9440', '#157F3E']
-    cmap = ListedColormap(verde)
-
-    # Crear mapa de calor para zonas boscosas
-    fig, ax = plt.subplots()
-    im = ax.imshow(boscoso, cmap=cmap)
-
-    # Añadir leyenda
-    cbar = ax.figure.colorbar(im, ax=ax)
-    cbar.ax.set_ylabel("Zonas boscosas", rotation=-90, va="bottom")
-
-    # Mostrar mapa de calor
-    plt.show()
-
-def crear_mapa_de_calor_vial():
-    ## Generar matriz aleatoria de 100x100 con valores entre 0 y 1
-    vial = np.random.rand(100, 100)
-
-    # Convertir matriz aleatoria en infraestructura vial utilizando función sigmoidal
-    vial = 1 / (1 + np.exp(-10*(vial-0.5)))
-
-    # Crear paleta de colores para infraestructura vial
-    gris = ['#F2F2F2', '#B2B2B2', '#595959', '#1A1A1A']
-    cmap = ListedColormap(gris)
-
-    # Crear mapa de calor para infraestructura vial
-    fig, ax = plt.subplots()
-    im = ax.imshow(vial, cmap=cmap)
-
-    # Añadir leyenda
-    cbar = ax.figure.colorbar(im, ax=ax)
-    cbar.ax.set_ylabel("Infraestructura vial", rotation=-90, va="bottom")
-
-    # Mostrar mapa de calor
-    plt.show()
-
-
-
-
-def microzonas(world, shape, sensibility):
+def crear_microzonas(world, shape, sensibility):
     microzonas = np.zeros(shape)
     cmap_microzonas = ListedColormap(['#000','#fff',"#ff0000","#0f0"])
     for i in range(shape[0]):
@@ -160,12 +71,103 @@ def microzonas(world, shape, sensibility):
             break
     return microzonas, cmap_microzonas
 
+def crear_pendientes(world, microzonas):
+    shape = world.shape
+
+    # Crear paleta de colores para relieve
+    marron = ['#fff','#603813', '#965927', '#B5874E', '#CEAA7B','#E7CBA9' ]
+    cmap = ListedColormap(marron)
+    
+    tamanio_ventana = 9
+    aux = np.zeros(shape)
+
+    # Recorrer la matriz y calcular el promedio de los puntos alrededor de cada punto
+    for fila in range(tamanio_ventana // 2, world.shape[0] - tamanio_ventana // 2):
+        for columna in range(tamanio_ventana // 2, world.shape[1] - tamanio_ventana // 2):
+            ventana = world[fila - tamanio_ventana // 2 : fila + tamanio_ventana // 2 + 1, 
+                            columna - tamanio_ventana // 2 : columna + tamanio_ventana // 2 + 1]
+            if microzonas[fila,columna] == 1:
+                aux[fila,columna] = np.mean(ventana)
+            else:
+                aux[fila,columna] = -1
+
+            
+    relieves = aux
+    # for i in range(shape[0]):
+    #     for j in range(shape[1]):
+    #         if world[i,j]>0.5 and world[i,j]<0.6 and microzonas[i,j] ==1:
+    #             relieves[i,j] = 3
+    #         elif world[i,j]>0.4 and world[i,j]<0.7 and microzonas[i,j] ==1:
+    #             relieves[i,j] = 2
+    #         elif world[i,j]>0.15 and world[i,j]<0.75 and microzonas[i,j] ==1:
+    #             relieves[i,j] = 1
+    
+    return relieves, cmap
+
+def crear_hidrico(world, microzonas):
+    shape = world.shape
+
+
+    azul = ['#fff','#D7EFFF', '#A4C8FF', '#6AAFFF', '#2674FF', '#0045B5']
+    cmap = ListedColormap(azul)
+
+    hidrico = np.zeros(shape)
+    for i in range(shape[0]):
+        for j in range(shape[1]):
+            if world[i,j]>-1 and world[i,j]<-0.75 and microzonas[i,j] ==1:
+                hidrico[i,j] = 3
+            elif world[i,j]>-0.75 and world[i,j]<-0.5 and microzonas[i,j] ==1:
+                hidrico[i,j] = 2
+            elif world[i,j]>-0.5 and world[i,j]<=0 and microzonas[i,j] ==1:
+                hidrico[i,j] = 1
+    
+    return hidrico, cmap
+
+def crear_bosques(world, microzonas):
+
+    shape = world.shape
+    # Crear paleta de colores para zonas boscosas
+    verde = ['#fff','#C7EA46', '#9ED14A', '#6FBF4A', '#4DAF4A', '#2D9440', '#157F3E']
+    cmap = ListedColormap(verde)
+    bosques = np.zeros(shape)
+    for i in range(shape[0]):
+        for j in range(shape[1]):
+            if world[i,j]>0.5 and world[i,j]<0.6 and microzonas[i,j] ==1:
+                bosques[i,j] = 3
+            elif world[i,j]>0.4 and world[i,j]<0.7 and microzonas[i,j] ==1:
+                bosques[i,j] = 2
+            elif world[i,j]>0.15 and world[i,j]<0.75 and microzonas[i,j] ==1:
+                bosques[i,j] = 1
+    
+    return bosques, cmap
+
+def crear_vial(world, microzonas,window):
+    shape = world.shape
+
+
+    cmap = ListedColormap(["#fff","#aaa","#bbb","#ccc","#ddd"])
+    vial_map = np.zeros(shape)
+    
+
+    for i in range(shape[0]):
+        for j in range(shape[1]):
+            if world[i,j] >0.5 and world[i,j] < 0.55 and microzonas[i,j]==1:
+                vial_map[i,j] = np.random.rand()
+            else:
+                vial_map[i,j] = 0
+                
+    tamanio_ventana = window
+    aux = np.zeros(shape)
+
+    # Recorrer la matriz y calcular el promedio de los puntos alrededor de cada punto
+    for fila in range(tamanio_ventana // 2, vial_map.shape[0] - tamanio_ventana // 2):
+        for columna in range(tamanio_ventana // 2, vial_map.shape[1] - tamanio_ventana // 2):
+            ventana = vial_map[fila - tamanio_ventana // 2 : fila + tamanio_ventana // 2 + 1, 
+                            columna - tamanio_ventana // 2 : columna + tamanio_ventana // 2 + 1]
+            aux[fila,columna] = np.mean(ventana)
+    vial2 = aux
+    return vial2, cmap
+
 def print_zeros(n):
     for i in range(n):
         print(0)
-    
-def mostrar_mapa( mapa, cmap):
-    fig, ax = plt.subplots()
-    im = ax.imshow(mapa, cmap=cmap)
-    im.figure.colorbar(im)
-
