@@ -237,7 +237,7 @@ for MicroArea=1:NumMicroAreas %para cada micro-area
         
     end
 end
-[e L] = dijkstra(AdyPonderaciones,PuntoIni,PuntoFin)
+[e L] = dijkstra(AdyPonderaciones,PuntoIni,PuntoFin);
 
 MatSol=zeros(NumFilas,NumColumnas);
 for i=1:size(L,2)

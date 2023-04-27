@@ -1,22 +1,51 @@
-
 import numpy as np
+def setupgraph(G, b, s):
+    G = G.astype(float)
+    shape = G.shape
+    h = shape[0]
+    w = shape[1]
+    if s == 1:
+        for i in range(h):
+            for j in range(w):
+                if G[i,j] == 0:
+                    G[i,j] = b
+    if s == 2:
+        for i in range(h):
+            for j in range(w):
+                if G[i,j] == b:
+                    G[i,j] = 0
 
-def setupgraph(A, val, diag):
-    if diag == 1:
-        np.fill_diagonal(A, val)
-    else:
-        A[A==0] = val
-    return A
+    return G
 
-def exchangenode(A, n1, n2=1):
-    A[[n1-1, n2-1],:] = A[[n2-1, n1-1],:]
-    A[:,[n1-1, n2-1]] = A[:,[n2-1, n1-1]]
-    return A
+def exchangenode(G, a, b):
+    # Exchange element at column a with element at column b;
+    buffer = G[:,a].copy()
+    G[:,a] = G[:,b]
+    G[:,b] = buffer
+
+    # Exchange element at row a with element at row b;
+    buffer = G[a,:].copy()
+    G[a,:] = G[b,:]
+    G[b,:] = buffer
+    
+    return G
 
 def listdijkstra(L, W, s, d):
-    while d != s:
-        L.insert(0, np.where(W[:,d] == min(W[:,d]))[0][0]+1)
-        d = L[0]-1
+    index = int(W.shape[0]-1)
+    while index > 0:
+        if W[1, d] == W[int(W.shape[0]-1), d]:
+            L.append(int(s))
+            index = 0
+        else:
+            index2 = int(W.shape[0])
+            while int(index2) > 0:
+                if W[int(index2)-1, d] < W[int(index2)-2, d]:
+                    L.append(int(W[int(index2)-1, 0]))
+                    L = listdijkstra(L, W, s, int(W[int(index2-1), 0]))
+                    index2 = 0
+                else:
+                    index2= int(index2) - 1
+            index = 0
     return L
 
 def dijkstra(A, s, d):
@@ -24,37 +53,46 @@ def dijkstra(A, s, d):
         e = 0
         L = [s]
     else:
-        A = setupgraph(A, np.inf, 1)
+        A = setupgraph(A,np.inf,1)
         if d == 1:
             d = s
-        A = exchangenode(A, 1, s)
+        A = exchangenode(A,0,s)
         lengthA = A.shape[0]
-        W = np.zeros((lengthA, lengthA))
-        for i in range(1, lengthA):
+        W = np.zeros(A.shape)
+        for i in range(1,lengthA):
             W[0,i] = i
             W[1,i] = A[0,i]
-        D = np.zeros((lengthA, 2))
+        D = np.zeros((lengthA,2))
         for i in range(lengthA):
             D[i,0] = A[0,i]
-            D[i,1] = i
-        D2 = D[1:,:]
-        L = [2]
-        while L[-1] <= (W.shape[0]-1):
-            L.append(L[-1]+1)
+            D[i,1] = i 
+        D2 = D[1:len(D),:]
+        L = 1
+        while L <= (W.shape[0]-2):
+            L = L + 1
             D2 = D2[D2[:,0].argsort()]
-            k = int(D2[0,1])
-            W[L[-1]-1,0] = k+1
-            D2 = np.delete(D2, 0, 0)
+            k = D2[0,1]
+            W[L,0] = k 
+           
+
+            D2 = D2[1:]
+            
             for i in range(D2.shape[0]):
-                if D[int(D2[i,1]),0] > (D[k,0] + A[k,int(D2[i,1])]):
-                    D[int(D2[i,1]),0] = D[k,0] + A[k,int(D2[i,1])]
+                k = int(k)
+                l = D[int(D2[i,1]),0] 
+                m = D[k,0]+A[k,int(D2[i,1])]
+                if l>m:
+                    D[int(D2[i,1]),0] = m
                     D2[i,0] = D[int(D2[i,1]),0]
-            for i in range(1, lengthA):
-                W[L[-1]-1,i] = D[i,0]
+            for i in range(1,A.shape[0]):
+                W[L,i] = D[i,0]
+
         if d == s:
-            L = [1]
+            L = [0]
         else:
             L = [d]
-        e = W[-1,d-1]
-        L = listdijkstra(L, W, s-1, d-1)
-    return e, L
+        e = W[W.shape[0]-1,d]
+        L = listdijkstra(L,W,s,d)
+    return e,L
+
+

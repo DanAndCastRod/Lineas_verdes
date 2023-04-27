@@ -59,13 +59,13 @@ def crear_microzonas(world, shape, sensibility):
             else: microzonas[i,j] = 1
 
     for i in range(100):
-        randomcoor = (np.random.randint(0,shape[0]),np.random.randint(0,shape[1]))
+        randomcoor = (np.random.randint(0,shape[0]),np.random.randint(0,shape[1]/2))
         if microzonas[randomcoor] == 1:
             microzonas[randomcoor] =2
             break
 
     for i in range(100):
-        randomcoor = (np.random.randint(0,shape[0]),np.random.randint(0,shape[1]))
+        randomcoor = (np.random.randint(0,shape[0]),np.random.randint(shape[1]/2,shape[1]))
         if microzonas[randomcoor] == 1:
             microzonas[randomcoor] =3
             break
@@ -76,11 +76,12 @@ def crear_pendientes(world, microzonas):
 
     # Crear paleta de colores para relieve
     marron = ['#fff','#603813', '#965927', '#B5874E', '#CEAA7B','#E7CBA9' ]
+    marron = ['#fff','#E7CBA9','#B5874E','#603813' ]
     cmap = ListedColormap(marron)
     
-    tamanio_ventana = 9
+    tamanio_ventana = 1
     aux = np.zeros(shape)
-
+    relieves = np.zeros(shape)
     # Recorrer la matriz y calcular el promedio de los puntos alrededor de cada punto
     for fila in range(tamanio_ventana // 2, world.shape[0] - tamanio_ventana // 2):
         for columna in range(tamanio_ventana // 2, world.shape[1] - tamanio_ventana // 2):
@@ -90,17 +91,23 @@ def crear_pendientes(world, microzonas):
                 aux[fila,columna] = np.mean(ventana)
             else:
                 aux[fila,columna] = -1
-
+    # n = 5
+    # for i in range(n):
+    #     quantil = 1/(i+1)
+    #     for j in range(shape[0]):
+    #         for k in range(shape[1]):
+    #             if np.abs(aux[j,k]) <= quantil:
+    #                 relieves[j,k] = i+1
             
-    relieves = aux
-    # for i in range(shape[0]):
-    #     for j in range(shape[1]):
-    #         if world[i,j]>0.5 and world[i,j]<0.6 and microzonas[i,j] ==1:
-    #             relieves[i,j] = 3
-    #         elif world[i,j]>0.4 and world[i,j]<0.7 and microzonas[i,j] ==1:
-    #             relieves[i,j] = 2
-    #         elif world[i,j]>0.15 and world[i,j]<0.75 and microzonas[i,j] ==1:
-    #             relieves[i,j] = 1
+    
+    for i in range(shape[0]):
+        for j in range(shape[1]):
+            if np.abs(aux[i,j])<1 and microzonas[i,j] ==1:
+                relieves[i,j] = 1
+            if np.abs(aux[i,j])<0.3 and microzonas[i,j] ==1:
+                relieves[i,j] = 2
+            if np.abs(aux[i,j])<0.1  and microzonas[i,j] ==1:
+                relieves[i,j] = 3
     
     return relieves, cmap
 
@@ -108,18 +115,19 @@ def crear_hidrico(world, microzonas):
     shape = world.shape
 
 
-    azul = ['#fff','#D7EFFF', '#A4C8FF', '#6AAFFF', '#2674FF', '#0045B5']
+    azul = ['#fff', '#2674FF','#A4C8FF','#D7EFFF']#, '#0045B5']
+
     cmap = ListedColormap(azul)
 
     hidrico = np.zeros(shape)
     for i in range(shape[0]):
         for j in range(shape[1]):
-            if world[i,j]>-1 and world[i,j]<-0.75 and microzonas[i,j] ==1:
-                hidrico[i,j] = 3
-            elif world[i,j]>-0.75 and world[i,j]<-0.5 and microzonas[i,j] ==1:
+            if world[i,j]>-1 and world[i,j]<-0.6 and microzonas[i,j] ==1:
+                hidrico[i,j] = 1
+            elif world[i,j]>-0.75 and world[i,j]<-0.4 and microzonas[i,j] ==1:
                 hidrico[i,j] = 2
             elif world[i,j]>-0.5 and world[i,j]<=0 and microzonas[i,j] ==1:
-                hidrico[i,j] = 1
+                hidrico[i,j] = 3
     
     return hidrico, cmap
 
@@ -128,16 +136,18 @@ def crear_bosques(world, microzonas):
     shape = world.shape
     # Crear paleta de colores para zonas boscosas
     verde = ['#fff','#C7EA46', '#9ED14A', '#6FBF4A', '#4DAF4A', '#2D9440', '#157F3E']
+    verde = ['#fff','#157F3E','#4DAF4A','#9ED14A']
     cmap = ListedColormap(verde)
     bosques = np.zeros(shape)
     for i in range(shape[0]):
         for j in range(shape[1]):
             if world[i,j]>0.5 and world[i,j]<0.6 and microzonas[i,j] ==1:
-                bosques[i,j] = 3
-            elif world[i,j]>0.4 and world[i,j]<0.7 and microzonas[i,j] ==1:
-                bosques[i,j] = 2
-            elif world[i,j]>0.15 and world[i,j]<0.75 and microzonas[i,j] ==1:
                 bosques[i,j] = 1
+            elif world[i,j]>0.45 and world[i,j]<0.7 and microzonas[i,j] ==1:
+                bosques[i,j] = 2
+            elif world[i,j]>0.05 and world[i,j]<0.8 and microzonas[i,j] ==1:
+                
+                bosques[i,j] = 3
     
     return bosques, cmap
 
@@ -145,14 +155,20 @@ def crear_vial(world, microzonas,window):
     shape = world.shape
 
 
-    cmap = ListedColormap(["#fff","#aaa","#bbb","#ccc","#ddd"])
+    cmap = ListedColormap(["#fff","#ddd","#ccc","#bbb","#aaa"])
     vial_map = np.zeros(shape)
     
 
     for i in range(shape[0]):
         for j in range(shape[1]):
-            if world[i,j] >0.5 and world[i,j] < 0.55 and microzonas[i,j]==1:
-                vial_map[i,j] = np.random.rand()
+            if world[i,j] >0.5 and world[i,j] < 0.51 and microzonas[i,j]==1:
+                vial_map[i,j] = 1
+            elif world[i,j] >0.5 and world[i,j] < 0.52 and microzonas[i,j]==1:
+                vial_map[i,j] = 2
+            elif world[i,j] >0.5 and world[i,j] < 0.53 and microzonas[i,j]==1:
+                vial_map[i,j] = 3
+            elif world[i,j] >0.5 and world[i,j] < 0.55 and microzonas[i,j]==1:
+                vial_map[i,j] = 4
             else:
                 vial_map[i,j] = 0
                 
