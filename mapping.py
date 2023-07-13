@@ -25,6 +25,24 @@ def mostrar_mapa( mapa, cmap):
     fig, ax = plt.subplots()
     im = ax.imshow(mapa, cmap=cmap)
     im.figure.colorbar(im)
+    plt.show()
+def mostrar_mapa_new(mapa, cmap, MatSol):
+    fig, ax = plt.subplots()
+    
+    # Dibuja el mapa original
+    im1 = ax.imshow(mapa, cmap=cmap)
+    fig.colorbar(im1, ax=ax)
+    
+    # Dibuja la solución sobre el mapa original
+    # Utilizamos el mapa de colores 'Reds' con alpha (transparencia) para poder ver el mapa debajo
+    cmap_sol = plt.cm.Reds
+    # cmap_sol.set_bad(color='r', alpha=0.1)  # Configura la transparencia para los valores "bad" (NaN)
+    MatSol_nan = MatSol.copy()
+    MatSol_nan[MatSol_nan == 0] = np.nan  # Configura los valores 0 (no seleccionados) como NaN para que sean transparentes
+    im2 = ax.imshow(MatSol_nan, cmap=cmap_sol, interpolation='none')
+    
+    # Muestra la figura
+    plt.show()
 
 def generar_mundo(n,m,scale, octaves, persistance, lacunarity, seed):
     shape = (n,m)
@@ -67,7 +85,7 @@ def crear_microzonas(world, shape, sensibility):
     for i in range(100):
         randomcoor = (np.random.randint(0,shape[0]),np.random.randint(shape[1]/2,shape[1]))
         if microzonas[randomcoor] == 1:
-            microzonas[randomcoor] =3
+            microzonas[randomcoor] = 3
             break
     return microzonas, cmap_microzonas
 

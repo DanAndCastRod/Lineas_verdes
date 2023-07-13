@@ -18,17 +18,17 @@ def setupgraph(G, b, s):
     return G
 
 def exchangenode(G, a, b):
-    # Exchange element at column a with element at column b;
-    buffer = G[:,a].copy()
-    G[:,a] = G[:,b]
-    G[:,b] = buffer
+    # Exchange element at lumn a with element at column b
+    buffer = np.copy(G[:, a:a+1]) # G[:, a:a+1] instead of G[:, a] to keep 2D shape
+    G[:, a:a+1] = G[:, b:b+1]
+    G[:, b:b+1] = buffer
 
-    # Exchange element at row a with element at row b;
-    buffer = G[a,:].copy()
-    G[a,:] = G[b,:]
-    G[b,:] = buffer
-    
+    # Exchange element at row a with element at row b
+    buffer = np.copy(G[a:a+1, :]) # G[a:a+1, :] instead of G[a, :] to keep 2D shape
+    G[a:a+1, :] = G[b:b+1, :]
+    G[b:b+1, :] = buffer
     return G
+
 
 def listdijkstra(L, W, s, d):
     index = int(W.shape[0]-1)
