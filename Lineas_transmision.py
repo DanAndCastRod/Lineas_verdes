@@ -2,10 +2,10 @@
 # Sistema de información
 # Diseño óptimo de ruta para línea de transmisión
 
-import openpyxl as px
-from sklearn.utils import check_array
-from scipy.spatial.distance import pdist, squareform
-from scipy.sparse.csgraph import dijkstra
+# import openpyxl as px
+# from sklearn.utils import check_array
+# from scipy.spatial.distance import pdist, squareform
+# # from scipy.sparse.csgraph import dijkstra
 import numpy as np
 from mapping import generar_mundo
 from mapping import crear_bosques
@@ -14,7 +14,7 @@ from mapping import crear_microzonas
 from mapping import crear_pendientes
 from mapping import crear_vial
 from mapping import mostrar_mapa
-from mapping import mostrar_mapa_new
+from mapping import mostrar_mapa_new_1
 import pandas as pd
 from Dijkstra_module import dijkstra
 from math import sqrt
@@ -190,11 +190,13 @@ for MicroArea in range(NumMicroAreas):
 
 #%%
 import time
-start_time = time.time()
-[e,L] = dijkstra(AdyPonderaciones,PuntoIni[0],PuntoFin[0])
-dur = time.time() - start_time
-mapa_sol = np.zeros_like(world)
-
+def run_model():
+    start_time = time.time()
+    [e,L] = dijkstra(AdyPonderaciones,PuntoIni[0],PuntoFin[0])
+    dur = time.time() - start_time
+    mapa_sol = np.zeros_like(world)
+    return dur, mapa_sol, e,L
+[dur, mapa_sol, e, L] = run_model()
 # Luego, tomamos cada índice en la lista L
 for index in L:
     # Buscamos las coordenadas correspondientes a este índice en las celdas activas
@@ -217,8 +219,8 @@ print(dur)
 
 # Finalmente, mostramos el mapa de la solución
 #%%
-from mapping import mostrar_mapa_new, mostrar_mapa
+from mapping import mostrar_mapa_new_1, mostrar_mapa
 mostrar_mapa(Zacti,cmap_acti)
-mostrar_mapa_new(SCI, 'hot',mapa_sol)
-mostrar_mapa_new(world, 'terrain', mapa_sol)
+mostrar_mapa_new_1(SCI, 'hot',mapa_sol)
+mostrar_mapa_new_1(world, 'terrain', mapa_sol)
 # %%

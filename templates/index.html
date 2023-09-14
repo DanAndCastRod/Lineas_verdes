@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>Ejecutar Python</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="mt-5">Ejecutar archivo Python</h1>
+      <form id="python-form" class="mt-4">
+        <div class="form-group">
+          <label for="file-location">Ubicación del archivo</label>
+          <input type="text" class="form-control" id="file-location" placeholder="Introduce la ruta del archivo">
+        </div>
+        <button type="submit" class="btn btn-primary">Ejecutar</button>
+      </form>
+      <div id="output" class="mt-4"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    $('#python-form').on('submit', function(event) {
+      event.preventDefault();
+
+      var fileLocation = $('#file-location').val();
+
+      $.ajax({
+        url: 'http://localhost:5000/execute_python',
+        type: 'post',
+        contentType: "application/json",
+        dataType: 'json',
+        data: JSON.stringify({
+          file_location: fileLocation,
+        }),
+        success: function(data) {
+          $('#output').html('<pre>' + JSON.stringify(data, null, 2) + '</pre>');
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
+        }
+      });
+    });
+    </script>
+  </body>
+</html>
