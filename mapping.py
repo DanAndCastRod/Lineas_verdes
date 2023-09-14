@@ -26,7 +26,7 @@ def mostrar_mapa( mapa, cmap):
     im = ax.imshow(mapa, cmap=cmap)
     im.figure.colorbar(im)
     plt.show()
-def mostrar_mapa_new(mapa, cmap, MatSol):
+def mostrar_mapa_new_1(mapa, cmap, MatSol):
     fig, ax = plt.subplots()
     
     # Dibuja el mapa original
@@ -39,10 +39,11 @@ def mostrar_mapa_new(mapa, cmap, MatSol):
     # cmap_sol.set_bad(color='r', alpha=0.1)  # Configura la transparencia para los valores "bad" (NaN)
     MatSol_nan = MatSol.copy()
     MatSol_nan[MatSol_nan == 0] = np.nan  # Configura los valores 0 (no seleccionados) como NaN para que sean transparentes
+    MatSol_nan[MatSol_nan == 1] = 1000  # Configura los valores 0 (no seleccionados) como NaN para que sean transparentes
     im2 = ax.imshow(MatSol_nan, cmap=cmap_sol, interpolation='none')
     
     # Muestra la figura
-    plt.show()
+    
 
 def generar_mundo(n,m,scale, octaves, persistance, lacunarity, seed):
     shape = (n,m)
