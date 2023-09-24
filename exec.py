@@ -211,6 +211,22 @@ print(f"{num_files} archivos han sido guardados exitosamente.")
 #%%
 import time
 def run_model():
+    
+    
+    # Lista de nombres de archivos
+    files = [f'ady_segment_{i+1}.csv' for i in range(10)]  # Ajusta el rango según el número de archivos
+
+    # Inicializa una lista para almacenar los DataFrames
+    dfs = []
+
+    # Lee cada archivo y lo añade a la lista de DataFrames
+    for file in files:
+        if os.path.isfile(file):  # Comprueba si el archivo existe
+            df = pd.read_csv(file)
+            dfs.append(df)
+
+# Concatena todos los DataFrames en uno solo
+    final_df = pd.concat(dfs, ignore_index=True)
     pd.read_csv("ady_ponderaciones.csv")
     # print("****====== 40%")
     start_time = time.time()
