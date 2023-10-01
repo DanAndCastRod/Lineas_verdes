@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ES-es">
+
+<head>
+  <title>Pyro Services</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link rel="stylesheet" href="../Style/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="../Style/bootstrap.1.min.css">  -->
+  <!-- <link rel="stylesheet" href="../Style/styles.css"> -->
+  <link rel="icon" href="../img/1Recurso 1.png" sizes="32x32"
+    type="image/png" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .carga {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      background-color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .carga .loader {
+      width: 40px;
+      height: 40px;
+      border: 5px solid #00b3ff;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    #img_head{
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+  </style>
+</head>
+
+<body >
+  <header></header>
+  <main>
+    <div class="carga">
+      <div class="loader"></div>
+    </div>
+
+    <section class="vh-100 bg-light">
+      <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card-body p-5 text-center">
+              <div class="col mb-4" id = "img_head">
+                <img class = "mx-2"src="../img/1Recurso 1.png" alt="" style="height: 4em; width: 4em;" />                
+                <h3>Pyro.services</h2>
+              </div>
+              <h3 class="mb-5">Ingresar</h3>
+              <div class="form-ouline mb-4" onclick="">
+                <input type="user" id="UserX" class="form-control form-control-lg" />
+                <label for="UserX" class="form-label">Usuario</label>
+              </div>
+              <div class="form-outline">
+                <input type="password" id="PasswordX" class="form-control form-control-lg" />
+                <label for="PasswordX" class="form-label">Password</label>
+              </div>
+
+              <!--Checkbox-->
+              <div class="form-check d-flex justify-content-start mb-4">
+                <input type="checkbox" class="form-check-input" value="" id="form1Example3" />
+                <label for="form1Example3" class="form-check-label mx-2">Recordar</label>
+              </div>
+
+              <button class="btn btn-lg btn-outline-success form-control-lg form-control" type="submit"
+                onclick="send_user2(); ">
+                Ingresar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <!-- place footer here -->
+  </footer>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="../Scripts/Ip_conf.js"></script>
+
+  <script src="../Scripts/bootstrap.min.js"></script>
+  <script src="../Scripts/chart.min.js"></script>
+  <script src="../Scripts/jquery-3.6.0.min.js"></script>
+  <script src="../Scripts/popper.min.js"></script>
+  <!-- <script src="../Scripts/script.js"></script> -->
+
+  <script>
+    const inputElement = document.getElementById("PasswordX");
+    undefined;
+    inputElement.addEventListener("keydown", function (event) {
+      if (event.key == "Enter") {
+        send_user2();
+      }
+    });
+    //var IP = '10.1.0.12'
+    //IP = '127.0.0.1'
+    function send_user2() {
+      localStorage.clear();
+
+      var data = {
+        User: document.getElementById("UserX").value,
+        Password: document.getElementById("PasswordX").value,
+      };
+
+      fetch("http://" + IP + ":1880/auth/" + data.User + "&" + data.Password)
+        .then((response) => response.json())
+        .then((data) => {
+          // delete data.Contraseña;
+          const DataJson = JSON.stringify(data);
+          localStorage.setItem("data", DataJson);
+
+          console.log(data);
+          var auth = data.auth;
+          sessionStorage.setItem("auth", auth);
+          if (auth == 1) {
+            if (sessionStorage.hasOwnProperty("url")) {
+              var url = sessionStorage.getItem("url");
+              window.location.href = url;
+            } else {
+              window.location.href = "http://" + IP + ":1880/Bios_apps";
+            }
+          } else {
+            us = document.getElementById("UserX");
+            ps = document.getElementById("PasswordX");
+
+            us.style.boxShadow = "0 0 4px var(--bs-danger)";
+            ps.style.boxShadow = "0 0 4px var(--bs-danger)";
+
+            // Obtener el elemento del input
+            const inputPassword = document.getElementById("PasswordX");
+
+            // Crear el texto que deseas agregar
+            const textoPequeno =
+              '<small style="color: var(--bs-danger)">Usuario o contraseña incorrectos</small>';
+
+            // Agregar el texto debajo del input
+            inputPassword.insertAdjacentHTML("beforebegin", textoPequeno);
+          }
+        });
+    }
+  </script>
+  <script>
+    window.addEventListener("load", function () {
+      const carga = document.querySelector(".carga");
+      setTimeout(function () {
+        carga.style.opacity = "0";
+        setTimeout(() => {
+          carga.style.display = "none";
+        }, 100);
+      }, 100);
+    });
+    function requestFullscreen() {
+      var element = document;
+      if (element.requestFullscreen) {
+        element.requestFullscreen();
+      } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+      } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+      } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+      }
+    }
+
+    // Solicitar el modo de pantalla completa cuando se carga la página
+    
+  </script>
+</body>
+
+</html>

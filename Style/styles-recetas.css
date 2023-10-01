@@ -1,0 +1,38 @@
+.icon {
+  width: 32px;
+  height: 32px;
+}
+.header-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.img-boton-edit {
+  background: url('../Img/pencil.png');
+  border: 0;
+  display: block;
+  height: 24px;
+  width: 24px;
+}
+
+.img-boton-del {
+  background: url('../Img/trash.png');
+  border: 0;
+  display: block;
+  height: 24px;
+  width: 24px;
+}
+
+#msg{ 
+  color: black !important;
+  border-radius: 25px !important;
+  text-align: center !important;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}    
