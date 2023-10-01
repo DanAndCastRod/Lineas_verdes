@@ -4,7 +4,7 @@ import pandas as pd
 def read_sheet(filename, sheetname):
     df = pd.read_excel(filename, sheet_name=sheetname, header=None)
     return df
-filename = './dijkstra V1 (2)/dijkstra V1/mapa7.xlsx'
+filename = '/Lineas_verdes/dijkstra V1 (2)/dijkstra V1/mapa7.xlsx'
 
 
 world = mp.generar_mundo(100,100,30,8,0.5,2,2013)
