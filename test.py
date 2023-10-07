@@ -31,4 +31,5 @@ mp.mostrar_mapa(Zbosq,cmap_bosq)
 mp.mostrar_mapa(Zpend,cmap_pend)
 mp.mostrar_mapa(Zhidr,cmap_hidr)
 mp.mostrar_mapa(Zvias,cmap_vial)
+print("OK")
 # %%

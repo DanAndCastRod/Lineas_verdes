@@ -11,8 +11,13 @@
   <!-- Bootstrap CSS v5.2.1 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-
+<style>
+  .img_res{
+    width: 30vw;
+  }
+</style>
 </head>
+
 
 <body>
   <header>
@@ -22,10 +27,10 @@
         <a class="navbar-brand" href="#"><img src="./img/1Recurso 1.png" alt="" srcset="" style="height: 32px;width: 32px;margin-right: 3px;">Pyro</a>
         <ul class="nav justify-content-center  ">
             <li class="nav-item">
-                <a class="nav-link active" href="#" aria-current="page">Active link</a>
+                <a class="nav-link active" href="/mapaini.xlsx" aria-current="page">Descargue la plantilla</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="N">Docs</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link disabled" href="#">Disabled link</a>
@@ -75,11 +80,31 @@
                 <div class="mb-3">
                     <label for="" class="form-label">Choose file</label>
                     <input type="file" class="form-control" name="" id="" placeholder="" aria-describedby="fileHelpId">
-                    <div id="fileHelpId" class="form-text">Help text</div>
+                    <div id="fileHelpId" class="form-text">inserte su archivo si no cuenta con una plantilla de click <a href="mapaini.xlsx">aqui</a></div>
+                </div>
+                <div class="row justify-content-center align-items-center g-2">
+                  <div class="col">
+
+                    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="button" aria-pressed="false" autocomplete="off">Button</button> -->
+                    <button type="button" class="btn btn-primary" onclick="load_file()">cargar archivo</button>
                   </div>
+                </div>
             </div>
-            <div class="col"></div>
-            <div class="col"></div>
+            
+            <div class="col">
+              <!-- <img src="/img/areas_activas.png" alt=""> -->
+            </div>
+            <div class="row">
+              <div class="col">
+
+                <img src="/img/areas_activas.png" alt="" class = "img_res">
+              </div>
+              <div class="col">
+
+                <img src="/img/areas_activas.png" alt="" class = "img_res">
+              </div>
+
+            </div>
         </div>
     </div>
   </main>
