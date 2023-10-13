@@ -132,8 +132,9 @@
   <script>
     function execute_py(){
       fetch("http://"+IP+":1880/execute_py")
-      .then(response => {
-        console.log(response.text())
+      .then(response => response.text())
+      .then(response =>{
+        console.log("status:"+response)
       })
      
     }
