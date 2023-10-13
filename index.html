@@ -27,14 +27,14 @@
         <a class="navbar-brand" href="#"><img src="./img/1Recurso 1.png" alt="" srcset="" style="height: 32px;width: 32px;margin-right: 3px;">Pyro</a>
         <ul class="nav justify-content-center  ">
             <li class="nav-item">
-                <a class="nav-link active" href="/mapaini.xlsx" aria-current="page">Descargue la plantilla</a>
+                <a class="nav-link active" href="/mapaini.xlsx" aria-current="page">Plantilla</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="N">Docs</a>
+                <a class="nav-link" href="https://sable-buzzard-a24.notion.site/Implementaci-n-de-modelo-y-t-cnica-de-soluci-n-fff1f5ae29414d69978099b3c845e0c5?pvs=4">Docs</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link disabled" href="#">Disabled link</a>
-            </li>
+            </li> -->
         </ul>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
           aria-controls="offcanvasNavbar">
@@ -68,6 +68,7 @@
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form> -->
           </div>
+          
         </div>
       </div>
     </nav>
@@ -76,32 +77,39 @@
     <div class="container">
         <div class="row justify-content-center align-items-center g-2">
             <div class="col">
-                <h2 class = mt-5>Ejecutar Script</h2>
-                <div class="mb-3">
+                <h2 class = mt-5>Ejecutar Agoritmo</h2>
+                <form action="/files" method="post" enctype="multipart/form-data">
+                  <div class="mb-3">
                     <label for="" class="form-label">Choose file</label>
-                    <input type="file" class="form-control" name="" id="" placeholder="" aria-describedby="fileHelpId">
+                    <input type="file" class="form-control" name="file" id="upload" placeholder="" aria-describedby="fileHelpId">
                     <div id="fileHelpId" class="form-text">inserte su archivo si no cuenta con una plantilla de click <a href="mapaini.xlsx">aqui</a></div>
-                </div>
-                <div class="row justify-content-center align-items-center g-2">
-                  <div class="col">
-
-                    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="button" aria-pressed="false" autocomplete="off">Button</button> -->
-                    <button type="button" class="btn btn-primary" onclick="load_file()">cargar archivo</button>
                   </div>
-                </div>
+                </form>
+                <button type ="submit" class ="btn btn-primary" onclick="load_file()">Subir</button>
+                <button type = "execute" class = "btn btn-success" onclick="execute_py()">Ejecutar</button>
             </div>
-            
+            <div class = "col"></div>
+            <div class="row justify-content-center align-items-center g-2">
+              <div class="col">
+
+                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="button" aria-pressed="false" autocomplete="off">Button</button> -->
+                <!-- <button type="button" class="btn btn-primary" onclick="load_file()">cargar archivo</button> -->
+              </div>
+            </div>
             <div class="col">
               <!-- <img src="/img/areas_activas.png" alt=""> -->
+            </div>
+            <div class="row align-items-center g-2" id="status">
+             
             </div>
             <div class="row">
               <div class="col">
 
-                <img src="/img/areas_activas.png" alt="" class = "img_res">
+                <img src="/img/mapa_solucion.png" alt="" class = "img_res ">
               </div>
               <div class="col">
 
-                <img src="/img/areas_activas.png" alt="" class = "img_res">
+                <img src="/img/superficie de costos integrada.png" alt="" class = "img_res">
               </div>
 
             </div>
@@ -118,6 +126,31 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
     integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+  <script src="./Scripts/Ip_conf.js"></script>
+  <script>
+    function load_file(){
+      var fileinput = document.getElementById("upload");
+      console.log(fileinput)
+      var file = fileinput.files[0];
+      console.log(file)
+      const formData = new FormData()
+      formData.append("file", file)
+
+      fetch('http://'+IP+':1880/files',{
+        method:"POST",
+        body:formData
+      })
+      .then(response=>{
+        response.text().then(result =>{
+          respuesta = result
+          if (response.ok & respuesta!="Error al cargar"){
+            alert("OK")
+          }
+        })
+      })
+      
+    }
   </script>
 </body>
 
