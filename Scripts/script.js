@@ -5,5 +5,8 @@ function authorizer(){
   }
 auth = sessionStorage.auth
 
+setInterval(() => {
+    authorizer()
+}, 1000);
 
 window.onload = authorizer();
