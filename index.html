@@ -130,6 +130,13 @@
   </script>
   <script src="./Scripts/Ip_conf.js"></script>
   <script>
+    function execute_py(){
+      fetch("http://"+IP+":1880/execute_py")
+      .then(response => response.json())
+      .then(data =>{
+        console.log("Ejecutado con exito" +  response)
+      })
+    }
     function load_file(){
       var fileinput = document.getElementById("upload");
       console.log(fileinput)
