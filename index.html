@@ -132,7 +132,7 @@
   <script>
     function execute_py(){
       fetch("http://"+IP+":1880/execute_py")
-      .then(response => response.json())
+      .then(response => response.stringify())
       .then(data =>{
         console.log("Ejecutado con exito" +  response)
       })
