@@ -132,10 +132,10 @@
   <script>
     function execute_py(){
       fetch("http://"+IP+":1880/execute_py")
-      .then(response => response.stringify())
-      .then(data =>{
-        console.log("Ejecutado con exito" +  response)
+      .then(response => {
+        console.log(response.text())
       })
+     
     }
     function load_file(){
       var fileinput = document.getElementById("upload");
