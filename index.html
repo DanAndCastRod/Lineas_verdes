@@ -1,6 +1,3 @@
-bs
-
-<!-- Realmodel -->
 
 <!doctype html>
 <html lang="en">
@@ -17,8 +14,27 @@ bs
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 <style>
+  @keyframes dotsAnimation {
+    0%{
+      content: ".";
+    }
+    33%{
+      content: "..";
+    }
+    66%{
+      content: "...";
+    }
+    100%{
+      content: ".";
+    }
+  }
+  .moving-dots::after{
+    content: "";
+    display: inline-block;
+    animation: dotsAnimation 2s infinite;
+  }
   .img_res{
-    width: 30vw;
+    /* width: 30vw; */
   }
 </style>
 </head>
@@ -80,20 +96,20 @@ bs
   </header>
   <main>
     <div class="container">
-        <div class="row justify-content-center align-items-center g-2">
-            <div class="col">
+        <div class="row  align-items-center g-2">
+            <div class="col-lg-6">
                 <h2 class = mt-5>Ejecutar Agoritmo</h2>
                 <form action="/files" method="post" enctype="multipart/form-data">
                   <div class="mb-3">
                     <label for="" class="form-label">Choose file</label>
-                    <input type="file" class="form-control" name="file" id="upload" placeholder="" aria-describedby="fileHelpId">
+                    <input type="file" class="form-control" name="file" id="upload" placeholder="" aria-describedby="fileHelpId" oninput="verify_name()">
                     <div id="fileHelpId" class="form-text">inserte su archivo si no cuenta con una plantilla de click <a href="mapaini.xlsx">aqui</a></div>
                   </div>
                 </form>
                 <button type ="submit" class ="btn btn-primary" onclick="load_file()">Subir</button>
                 <button type = "execute" class = "btn btn-success" onclick="execute_py()">Ejecutar</button>
             </div>
-            <div class = "col"></div>
+            <!-- <div class = "col"></div> -->
             <div class="row justify-content-center align-items-center g-2">
               <div class="col">
 
@@ -105,16 +121,18 @@ bs
               <!-- <img src="/img/areas_activas.png" alt=""> -->
             </div>
             <div class="row align-items-center g-2" id="status">
-             
+              <div></div>
             </div>
-            <div class="row">
-              <div class="col">
+         
+            <div class="row flex-row">
+              <div class="col-md-6">
 
-                <img src="./img/mapa_solucion.png" alt="" class = "img_res ">
+
+                <img src="./img/mapa_solucion.png" alt="" class = "img_res img-fluid ">
               </div>
-              <div class="col">
+              <div class="col-md-6">
 
-                <img src="./img/superficie de costos integrada.png" alt="" class = "img_res">
+                <img src="./img/superficie de costos integrada.png" alt="" class = "img_res img-fluid">
               </div>
 
             </div>
@@ -135,6 +153,8 @@ bs
   </script>
   <script src="./Scripts/Ip_conf.js"></script>
   <script>
+    var dotspan = document.createElement('span');
+    dotspan.className = "moving-dots";
     function execute_py(){
       fetch("http://"+IP+":1880/execute_py")
       .then(response => response.text())
@@ -164,6 +184,19 @@ bs
         })
       })
       
+    }
+    const status = document.getElementById("status")
+    function verify_name(){
+      file_input = document.getElementById('upload')
+      if (file_input.files[0].name != "mapaini.xlsx"){
+        
+        status.innerText = "El documento debe llamarse mapaini.xlsx"
+        status.style.color = "red"
+        console.log("El documento debe llamarse mapaini.xlsx")
+      }else{
+        status.innerText = ""
+      }
+
     }
   </script>
 </body>
