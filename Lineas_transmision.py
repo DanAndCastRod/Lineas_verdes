@@ -60,7 +60,7 @@ Zacti, cmap_acti = crear_microzonas(world, shape, 0.55)
 def read_sheet(filename, sheetname):
     df = pd.read_excel(filename, sheet_name=sheetname, header=None)
     return df
-filename = './mapaini.xlsx'
+filename = '/root/.node-red/public/Lineas_verdes/mapaini.xlsx'
 world = read_sheet(filename, "world").values
 ZonasActivas = 'acti'
 Zacti = read_sheet(filename, ZonasActivas).values
