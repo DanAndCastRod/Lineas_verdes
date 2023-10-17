@@ -177,15 +177,21 @@
       // console.log(file)
       const formData = new FormData()
       formData.append("file", file)
-
+var state=document.getElementById('status')
+state.classList.add('text-primary')
+state.innerText('Cargando archivo')
       fetch('http://'+IP+':1880/files',{
         method:"POST",
         body:formData
       })
       .then(response=>{
         response.text().then(result =>{
+var state = document.getElementById('status')
+
           respuesta = result
           if (response.ok & respuesta!="Error al cargar"){
+state.innerText('Documento Cargado')
+state.classList('text-success')
             alert("OK")
           }
         })
