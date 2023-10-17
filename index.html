@@ -163,11 +163,18 @@
       })
      
     }
+    function executing(text){
+      var estado = document.getElementById('status')
+      estado.innerText = text
+      estado.classList.add("moving-dots")
+      estado.classList.add('text-primary')
+    }
     function load_file(){
+      executing("Cargando Archivo")
       var fileinput = document.getElementById("upload");
-      console.log(fileinput)
+      // console.log(fileinput)
       var file = fileinput.files[0];
-      console.log(file)
+      // console.log(file)
       const formData = new FormData()
       formData.append("file", file)
 
