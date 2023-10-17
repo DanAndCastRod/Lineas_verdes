@@ -48,7 +48,7 @@
         <a class="navbar-brand" href="#"><img src="./img/1Recurso 1.png" alt="" srcset="" style="height: 32px;width: 32px;margin-right: 3px;">Pyro</a>
         <ul class="nav justify-content-center  ">
             <li class="nav-item">
-                <a class="nav-link active" href="./mapaini.xlsx" aria-current="page">Plantilla</a>
+                <a class="nav-link active" href="./Docs/mapaini.xlsx" aria-current="page">Plantilla</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="https://sable-buzzard-a24.notion.site/Implementaci-n-de-modelo-y-t-cnica-de-soluci-n-fff1f5ae29414d69978099b3c845e0c5?pvs=4">Docs</a>
@@ -103,7 +103,7 @@
                   <div class="mb-3">
                     <label for="" class="form-label">Choose file</label>
                     <input type="file" class="form-control" name="file" id="upload" placeholder="" aria-describedby="fileHelpId" oninput="verify_name()">
-                    <div id="fileHelpId" class="form-text">inserte su archivo si no cuenta con una plantilla de click <a href="mapaini.xlsx">aqui</a></div>
+                    <div id="fileHelpId" class="form-text">inserte su archivo si no cuenta con una plantilla de click <a href="./Docs/mapaini.xlsx">aqui</a></div>
                   </div>
                 </form>
                 <button type ="submit" class ="btn btn-primary" onclick="load_file()">Subir</button>
@@ -128,11 +128,15 @@
               <div class="col-md-6">
 
 
-                <img src="./img/mapa_solucion.png" alt="" class = "img_res img-fluid ">
+                <img src="./img/mapa_solucion2.png" alt="" class = "img_res img-fluid ">
               </div>
               <div class="col-md-6">
 
-                <img src="./img/superficie de costos integrada.png" alt="" class = "img_res img-fluid">
+                <img src="./img/Micro-areas-activas2.png" alt="" class = "img_res img-fluid">
+              </div>
+              <div class="col-md-6">
+
+                <img src="./img/superficie_costos2.png" alt="" class = "img_res img-fluid">
               </div>
 
             </div>
@@ -156,9 +160,14 @@
     var dotspan = document.createElement('span');
     dotspan.className = "moving-dots";
     function execute_py(){
-      fetch("http://"+IP+":1880/execute_py")
+      executing("Ejecutando algoritmo")
+      fetch("http://"+IP+":1880/execute_dijkstra")
       .then(response => response.text())
       .then(response =>{
+        
+        var state = document.getElementById('status')
+        state.innerText = "No se pudo cargar el archivo"
+        state.className = 'text-danger'
         console.log("status:"+response)
       })
      

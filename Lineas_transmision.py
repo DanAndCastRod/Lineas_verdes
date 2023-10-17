@@ -60,7 +60,8 @@ Zacti, cmap_acti = crear_microzonas(world, shape, 0.55)
 def read_sheet(filename, sheetname):
     df = pd.read_excel(filename, sheet_name=sheetname, header=None)
     return df
-filename = './dijkstra V1 (2)/dijkstra V1/mapa16.xlsx'
+filename = 'mapaini.xlsx'
+world = read_sheet(filename, "world").values
 ZonasActivas = 'acti'
 Zacti = read_sheet(filename, ZonasActivas).values
 ZonasBosque = 'bosq'
@@ -221,7 +222,7 @@ from mapping import mostrar_mapa_new_1, mostrar_mapa
 # mostrar_mapa_new_1(SCI, 'hot',mapa_sol)
 # mostrar_mapa_new_1(world, 'terrain', mapa_sol)
 # %%
-mostrar_mapa_new_1(Zacti,cmap_acti, "Micro-areas-activas2")
+mostrar_mapa_new_1(Zacti,cmap_acti, mapa_sol, "Micro-areas-activas2")
 mostrar_mapa_new_1(SCI, 'hot',mapa_sol, "superficie_costos2")
 mostrar_mapa_new_1(world, 'terrain', mapa_sol,"mapa_solucion2")
 
