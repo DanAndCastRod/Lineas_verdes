@@ -217,7 +217,13 @@ print(dur)
 # Finalmente, mostramos el mapa de la solución
 #%%
 from mapping import mostrar_mapa_new_1, mostrar_mapa
-mostrar_mapa(Zacti,cmap_acti)
-mostrar_mapa_new_1(SCI, 'hot',mapa_sol)
-mostrar_mapa_new_1(world, 'terrain', mapa_sol)
+# mostrar_mapa(Zacti,cmap_acti)
+# mostrar_mapa_new_1(SCI, 'hot',mapa_sol)
+# mostrar_mapa_new_1(world, 'terrain', mapa_sol)
 # %%
+mostrar_mapa_new_1(Zacti,cmap_acti, "Micro-areas-activas2")
+mostrar_mapa_new_1(SCI, 'hot',mapa_sol, "superficie_costos2")
+mostrar_mapa_new_1(world, 'terrain', mapa_sol,"mapa_solucion2")
+
+
+#%%
