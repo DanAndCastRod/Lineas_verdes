@@ -166,8 +166,8 @@
     function executing(text){
       var estado = document.getElementById('status')
       estado.innerText = text
-      estado.classList.add("moving-dots")
-      estado.classList.add('text-primary')
+      estado.className="moving-dots text-primary"
+      
     }
     function load_file(){
       executing("Cargando Archivo")
@@ -177,23 +177,30 @@
       // console.log(file)
       const formData = new FormData()
       formData.append("file", file)
-var state=document.getElementById('status')
-state.classList.add('text-primary')
-state.innerText('Cargando archivo')
+
+
       fetch('http://'+IP+':1880/files',{
         method:"POST",
         body:formData
       })
       .then(response=>{
         response.text().then(result =>{
-var state = document.getElementById('status')
+        var state = document.getElementById('status')
 
           respuesta = result
+          // console.log(respuesta)
           if (response.ok & respuesta!="Error al cargar"){
-state.innerText('Documento Cargado')
-state.classList('text-success')
+            state.innerText = 'Documento Cargado'
+            state.className = 'text-success'
             alert("OK")
+          }else{
+            var state = document.getElementById('status')
+            state.innerText = "No se pudo cargar el archivo"
+            state.className = 'text-danger'
           }
+        }).catch(err=>{
+          
+          
         })
       })
       
@@ -205,7 +212,7 @@ state.classList('text-success')
         
         status.innerText = "El documento debe llamarse mapaini.xlsx"
         status.style.color = "red"
-        console.log("El documento debe llamarse mapaini.xlsx")
+        // console.log("El documento debe llamarse mapaini.xlsx")
       }else{
         status.innerText = ""
       }

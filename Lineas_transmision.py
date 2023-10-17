@@ -60,7 +60,7 @@ Zacti, cmap_acti = crear_microzonas(world, shape, 0.55)
 def read_sheet(filename, sheetname):
     df = pd.read_excel(filename, sheet_name=sheetname, header=None)
     return df
-filename = './mapaini.xlsx'
+filename = './dijkstra V1 (2)/dijkstra V1/mapa16.xlsx'
 ZonasActivas = 'acti'
 Zacti = read_sheet(filename, ZonasActivas).values
 ZonasBosque = 'bosq'
@@ -211,9 +211,6 @@ for index in L:
         mapa_sol[row, col] = 1000000000
 #%%
 print(dur)
-
-
-
 # %% Primero, generamos un mapa en blanco del mismo tamaño que el mapa original
 
 

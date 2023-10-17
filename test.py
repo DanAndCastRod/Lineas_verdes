@@ -1,10 +1,12 @@
 #%%
 import mapping as mp
 import pandas as pd
+import matplotlib.pyplot as plt
 def read_sheet(filename, sheetname):
     df = pd.read_excel(filename, sheet_name=sheetname, header=None)
     return df
-filename = '/root/.node-red/public/Lineas_verdes/dijkstra V1 (2)/dijkstra V1/mapa7.xlsx'
+# filename = '/root/.node-red/public/Lineas_verdes/dijkstra V1 (2)/dijkstra V1/mapa7.xlsx'
+filename = './dijkstra V1 (2)/dijkstra V1/mapa7.xlsx'
 
 
 world = mp.generar_mundo(100,100,30,8,0.5,2,2013)
@@ -31,5 +33,7 @@ mp.mostrar_mapa(Zbosq,cmap_bosq)
 mp.mostrar_mapa(Zpend,cmap_pend)
 mp.mostrar_mapa(Zhidr,cmap_hidr)
 mp.mostrar_mapa(Zvias,cmap_vial)
+
 print("OK")
 # %%
+plt.show()
