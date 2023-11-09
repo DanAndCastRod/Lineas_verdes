@@ -247,8 +247,8 @@ def process_file(filename):
         # Finalmente, mostramos el mapa de la solución
         from mapping import mostrar_mapa_new_1, mostrar_mapa
         mostrar_mapa(Zacti,cmap_acti)
-        mostrar_mapa_new_1(SCI, 'hot',mapa_sol)
-        mostrar_mapa_new_1(world, 'terrain', mapa_sol)
+        mostrar_mapa_new_1(SCI, 'hot',mapa_sol, "sup_costos")
+        mostrar_mapa_new_1(world, 'terrain', mapa_sol, "terreno")
 
     except Exception as e:
         print(f'Error al procesar el archivo: {e}')

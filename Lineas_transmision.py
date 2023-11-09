@@ -60,7 +60,9 @@ Zacti, cmap_acti = crear_microzonas(world, shape, 0.55)
 def read_sheet(filename, sheetname):
     df = pd.read_excel(filename, sheet_name=sheetname, header=None)
     return df
-filename = '/root/.node-red/public/Lineas_verdes/mapaini.xlsx'
+# filename = '/root/.node-red/public/Lineas_verdes/mapaini.xlsx'
+filename = 'mapaini.xlsx'
+
 world = read_sheet(filename, "world").values
 ZonasActivas = 'acti'
 Zacti = read_sheet(filename, ZonasActivas).values
@@ -222,9 +224,27 @@ from mapping import mostrar_mapa_new_1, mostrar_mapa
 # mostrar_mapa_new_1(SCI, 'hot',mapa_sol)
 # mostrar_mapa_new_1(world, 'terrain', mapa_sol)
 # %%
-mostrar_mapa_new_1(Zacti,cmap_acti, mapa_sol, "Micro-areas-activas2")
-mostrar_mapa_new_1(SCI, 'hot',mapa_sol, "superficie_costos2")
-mostrar_mapa_new_1(world, 'terrain', mapa_sol,"mapa_solucion2")
+import mapping as mp
+import matplotlib.pyplot as plt
+# mostrar_mapa_new_1(Zacti,cmap_acti, mapa_sol, "Micro-areas-activas2")
+fig, ax = plt.subplots()
+mp.mostrar_mapa_new_2(ax, SCI, 'hot',mapa_sol, "superficie_costos2")
+# mostrar_mapa_new_1(Zbosq, cmap_bosq, mapa_sol,"mapa_solucion2")
 
 
 #%%
+from mapping import crear_pendientes, crear_microzonas
+world2 = generar_mundo(100,100, 50, 6, 0.5, 3,2023)
+
+
+mostrar_mapa(world2, "terrain")
+act, cmap_acti = crear_microzonas(world,(100,100),.4)
+mostrar_mapa(act, cmap_acti)
+pend, cmap = crear_pendientes(world2,act)
+mostrar_mapa(pend,cmap)
+#%%
+df = pd.DataFrame(SCI)
+df.to_excel("SCI.xlsx")
+
+# %%
+
