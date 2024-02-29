@@ -25,7 +25,16 @@ def mostrar_mapa( mapa, cmap):
     fig, ax = plt.subplots()
     im = ax.imshow(mapa, cmap=cmap)
     im.figure.colorbar(im)
-    plt.show()
+    # plt.show()
+    return fig,ax
+
+def mostrar_mapa2(ax, mapa, cmap):
+    # fig, ax = plt.subplots()
+    im = ax.imshow(mapa, cmap=cmap)
+    ax.figure.colorbar(im, ax=ax)
+    # plt.show()
+    
+
 def mostrar_mapa_new_1(mapa, cmap, MatSol,name):
     fig, ax = plt.subplots()
     
@@ -41,11 +50,30 @@ def mostrar_mapa_new_1(mapa, cmap, MatSol,name):
     MatSol_nan[MatSol_nan == 0] = np.nan  # Configura los valores 0 (no seleccionados) como NaN para que sean transparentes
     MatSol_nan[MatSol_nan == 1] = 1000  # Configura los valores 0 (no seleccionados) como NaN para que sean transparentes
     im2 = ax.imshow(MatSol_nan, cmap=cmap_sol, interpolation='none')
+    return fig, ax
 
-    plt.savefig(f"./img/{name}.png")
+def mostrar_mapa_new_2(ax, mapa, cmap, MatSol,name):
+    # fig, ax = plt.subplots()
+    
+    # Dibuja el mapa original
+    im1 = ax.imshow(mapa, cmap=cmap)
+    # fig.colorbar(im1, ax=ax)
+
+    
+    # Dibuja la solución sobre el mapa original
+    # Utilizamos el mapa de colores 'Reds' con alpha (transparencia) para poder ver el mapa debajo
+    cmap_sol = plt.cm.Reds_r
+    # cmap_sol.set_bad(color='r', alpha=0.1)  # Configura la transparencia para los valores "bad" (NaN)
+    MatSol_nan = MatSol.copy()
+    MatSol_nan[MatSol_nan == 0] = np.nan  # Configura los valores 0 (no seleccionados) como NaN para que sean transparentes
+    MatSol_nan[MatSol_nan == 1] = 1000  # Configura los valores 0 (no seleccionados) como NaN para que sean transparentes
+    im2 = ax.imshow(MatSol_nan, cmap=cmap_sol, interpolation='none')
+    # return fig, ax
+    # plt.savefig(f"./img/{name}.png")
     
     # Muestra la figura
     
+
 
 def generar_mundo(n,m,scale, octaves, persistance, lacunarity, seed):
     shape = (n,m)

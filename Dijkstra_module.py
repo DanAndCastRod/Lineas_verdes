@@ -1,21 +1,12 @@
 import numpy as np
 def setupgraph(G, b, s):
     G = G.astype(float)
-    shape = G.shape
-    h = shape[0]
-    w = shape[1]
     if s == 1:
-        for i in range(h):
-            for j in range(w):
-                if G[i,j] == 0:
-                    G[i,j] = b
-    if s == 2:
-        for i in range(h):
-            for j in range(w):
-                if G[i,j] == b:
-                    G[i,j] = 0
-
+        G[G == 0] = b
+    elif s == 2:
+        G[G == b] = 0
     return G
+
 
 def exchangenode(G, a, b):
     # Exchange element at lumn a with element at column b
