@@ -1,59 +1,66 @@
-
 <!doctype html>
 <html lang="en">
+
 <head>
   <title>Ejecución</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
 
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="icon" href="./img/1Recurso 1.png" type = "image/x-icon"
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" href="./img/1Recurso 1.png" type="image/x-icon" <meta name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS v5.2.1 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-<style>
-  @keyframes dotsAnimation {
-    0%{
-      content: ".";
+  <style>
+    @keyframes dotsAnimation {
+      0% {
+        content: ".";
+      }
+
+      33% {
+        content: "..";
+      }
+
+      66% {
+        content: "...";
+      }
+
+      100% {
+        content: ".";
+      }
     }
-    33%{
-      content: "..";
+
+    .moving-dots::after {
+      content: "";
+      display: inline-block;
+      animation: dotsAnimation 2s infinite;
     }
-    66%{
-      content: "...";
+
+    .img_res {
+      /* width: 30vw; */
     }
-    100%{
-      content: ".";
-    }
-  }
-  .moving-dots::after{
-    content: "";
-    display: inline-block;
-    animation: dotsAnimation 2s infinite;
-  }
-  .img_res{
-    /* width: 30vw; */
-  }
-</style>
+  </style>
 </head>
 
 
 <body>
   <header>
-     
+
     <nav class="navbar navbar-light bg-light">
       <div class="container container-fluid">
-        <a class="navbar-brand" href="#"><img src="./img/1Recurso 1.png" alt="" srcset="" style="height: 32px;width: 32px;margin-right: 3px;">Pyro</a>
+        <a class="navbar-brand" href="#"><img src="./img/1Recurso 1.png" alt="" srcset=""
+            style="height: 32px;width: 32px;margin-right: 3px;">Pyro</a>
         <ul class="nav justify-content-center  ">
-            <li class="nav-item">
-                <a class="nav-link active" href="./Docs/mapaini.xlsx" aria-current="page">Plantilla</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="https://sable-buzzard-a24.notion.site/Implementaci-n-de-modelo-y-t-cnica-de-soluci-n-fff1f5ae29414d69978099b3c845e0c5?pvs=4">Docs</a>
-            </li>
-            <!-- <li class="nav-item">
+          <li class="nav-item">
+            <a class="nav-link active" href="./Docs/mapaini.xlsx" aria-current="page">Plantilla</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"
+              href="https://sable-buzzard-a24.notion.site/Implementaci-n-de-modelo-y-t-cnica-de-soluci-n-fff1f5ae29414d69978099b3c845e0c5?pvs=4">Docs</a>
+          </li>
+          <!-- <li class="nav-item">
                 <a class="nav-link disabled" href="#">Disabled link</a>
             </li> -->
         </ul>
@@ -61,8 +68,7 @@
           aria-controls="offcanvasNavbar">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
-          aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
           <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -89,72 +95,28 @@
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form> -->
           </div>
-          
+
         </div>
       </div>
     </nav>
   </header>
   <main>
     <div class="container">
-        <div class="row  align-items-center g-2">
-            <div class="col-lg-6">
-                <h2 class = mt-5>Ejecutar Agoritmo</h2>
-                <form action="/files" method="post" enctype="multipart/form-data">
-                  <div class="mb-3">
-                    <label for="" class="form-label">Choose file</label>
-                    <input type="file" class="form-control" name="file" id="upload" placeholder="" aria-describedby="fileHelpId" oninput="verify_name()">
-                    <div id="fileHelpId" class="form-text">inserte su archivo si no cuenta con una plantilla de click <a href="./Docs/mapaini.xlsx">aqui</a></div>
-                  </div>
-                </form>
-                <button type ="submit" class ="btn btn-primary" onclick="load_file()">Subir</button>
-                <button type = "execute" class = "btn btn-success" onclick="execute_py()">Ejecutar</button>
-            </div>
-            <!-- <div class = "col"></div> -->
-            <div class="row justify-content-center align-items-center g-2">
-              <div class="col">
 
-                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="button" aria-pressed="false" autocomplete="off">Button</button> -->
-                <!-- <button type="button" class="btn btn-primary" onclick="load_file()">cargar archivo</button> -->
-              </div>
-            </div>
-            <div class="col">
-              <!-- <img src="/img/areas_activas.png" alt=""> -->
-            </div>
-            <div class="row align-items-center g-2" id="status">
-              <div></div>
-            </div>
-         
-            <div class="row flex-row">
-              <div class="col-md-6">
-
-
-                <img src="./img/mapa_solucion2.png" alt="" class = "img_res img-fluid ">
-              </div>
-              <div class="col-md-6">
-
-                <img src="./img/Micro-areas-activas2.png" alt="" class = "img_res img-fluid">
-              </div>
-              <div class="col-md-6">
-
-                <img src="./img/superficie_costos2.png" alt="" class = "img_res img-fluid">
-              </div>
-
-            </div>
-        </div>
     </div>
   </main>
   <footer>
-    
+
   </footer>
   <!-- Bootstrap JavaScript Libraries -->
   <!-- <script src = "./Scripts/script.js"></script> -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
     integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
-  </script>
+    </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
     integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
-  </script>
+    </script>
   <script src="./Scripts/Ip_conf.js"></script>
   <script>
     // var dotspan = document.createElement('span');
@@ -164,19 +126,19 @@
     //   fetch("http://"+IP+":1880/execute_dijkstra")
     //   .then(response => response.text())
     //   .then(response =>{
-        
+
     //     var state = document.getElementById('status')
     //     state.innerText = "Ejecución Realizada"
     //     state.className = 'text-success'
     //     console.log("status:"+response)
     //   })
-     
+
     // }
     // function executing(text){
     //   var estado = document.getElementById('status')
     //   estado.innerText = text
     //   estado.className="moving-dots text-primary"
-      
+
     // }
     // function load_file(){
     //   executing("Cargando Archivo")
@@ -208,17 +170,17 @@
     //         state.className = 'text-danger'
     //       }
     //     }).catch(err=>{
-          
-          
+
+
     //     })
     //   })
-      
+
     // }
     // const status = document.getElementById("status")
     // function verify_name(){
     //   file_input = document.getElementById('upload')
     //   if (file_input.files[0].name != "mapaini.xlsx"){
-        
+
     //     status.innerText = "El documento debe llamarse mapaini.xlsx"
     //     status.style.color = "red"
     //     // console.log("El documento debe llamarse mapaini.xlsx")
@@ -227,27 +189,31 @@
     //   }
 
     // }
-    table = document.createElement('table')
-    table.className = 'table table-hover table-bordered'
-    thead = document.createElement('thead')
-    thead.className = 'table-dark'
-    thead.innerHTML = `<tr>
-            <th>Nombre</th>
-            <th>Edad</th>
+    fetch('../Docs/Data.json').then(response=>response.json())
+    .then(Data => {
+
+      table = document.createElement('table')
+      table.className = 'table table-hover table-bordered'
+      thead = document.createElement('thead')
+      thead.className = 'table-dark'
+      thead.innerHTML = `<tr>
+        <th>Nombre</th>
+        <th>Edad</th>
             <th>Pais</th>
-        </tr>`
-    tbody = document.createElement('tbody')
-    Data.forEach(e=>{
-        tbody.innerHTML+=`<tr>
-            <td>${e.nombre}</td>
-            <td>${e.edad}</td>
-            <td>${e.pais}</td>
-        </tr`
-    })
-    table.appendChild(thead)
-    table.appendChild(tbody)
-    cont = document.querySelectorAll('.container')[1]
-    cont.innerHTML = table.outerHTML
+            </tr>`
+            tbody = document.createElement('tbody')
+            Data.forEach(e => {
+              tbody.innerHTML += `<tr>
+                <td>${e.nombre}</td>
+                <td>${e.edad}</td>
+                <td>${e.pais}</td>
+                </tr`
+              })
+              table.appendChild(thead)
+              table.appendChild(tbody)
+              cont = document.querySelectorAll('.container')[1]
+              cont.innerHTML = table.outerHTML
+            })
   </script>
 </body>
 
