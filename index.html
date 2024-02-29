@@ -157,76 +157,76 @@
   </script>
   <script src="./Scripts/Ip_conf.js"></script>
   <script>
-    var dotspan = document.createElement('span');
-    dotspan.className = "moving-dots";
-    function execute_py(){
-      executing("Ejecutando algoritmo")
-      fetch("http://"+IP+":1880/execute_dijkstra")
-      .then(response => response.text())
-      .then(response =>{
+    // var dotspan = document.createElement('span');
+    // dotspan.className = "moving-dots";
+    // function execute_py(){
+    //   executing("Ejecutando algoritmo")
+    //   fetch("http://"+IP+":1880/execute_dijkstra")
+    //   .then(response => response.text())
+    //   .then(response =>{
         
-        var state = document.getElementById('status')
-        state.innerText = "Ejecución Realizada"
-        state.className = 'text-success'
-        console.log("status:"+response)
-      })
+    //     var state = document.getElementById('status')
+    //     state.innerText = "Ejecución Realizada"
+    //     state.className = 'text-success'
+    //     console.log("status:"+response)
+    //   })
      
-    }
-    function executing(text){
-      var estado = document.getElementById('status')
-      estado.innerText = text
-      estado.className="moving-dots text-primary"
+    // }
+    // function executing(text){
+    //   var estado = document.getElementById('status')
+    //   estado.innerText = text
+    //   estado.className="moving-dots text-primary"
       
-    }
-    function load_file(){
-      executing("Cargando Archivo")
-      var fileinput = document.getElementById("upload");
-      // console.log(fileinput)
-      var file = fileinput.files[0];
-      // console.log(file)
-      const formData = new FormData()
-      formData.append("file", file)
+    // }
+    // function load_file(){
+    //   executing("Cargando Archivo")
+    //   var fileinput = document.getElementById("upload");
+    //   // console.log(fileinput)
+    //   var file = fileinput.files[0];
+    //   // console.log(file)
+    //   const formData = new FormData()
+    //   formData.append("file", file)
 
 
-      fetch('http://'+IP+':1880/files',{
-        method:"POST",
-        body:formData
-      })
-      .then(response=>{
-        response.text().then(result =>{
-        var state = document.getElementById('status')
+    //   fetch('http://'+IP+':1880/files',{
+    //     method:"POST",
+    //     body:formData
+    //   })
+    //   .then(response=>{
+    //     response.text().then(result =>{
+    //     var state = document.getElementById('status')
 
-          respuesta = result
-          // console.log(respuesta)
-          if (response.ok & respuesta!="Error al cargar"){
-            state.innerText = 'Documento Cargado'
-            state.className = 'text-success'
-            alert("OK")
-          }else{
-            var state = document.getElementById('status')
-            state.innerText = "No se pudo cargar el archivo"
-            state.className = 'text-danger'
-          }
-        }).catch(err=>{
+    //       respuesta = result
+    //       // console.log(respuesta)
+    //       if (response.ok & respuesta!="Error al cargar"){
+    //         state.innerText = 'Documento Cargado'
+    //         state.className = 'text-success'
+    //         alert("OK")
+    //       }else{
+    //         var state = document.getElementById('status')
+    //         state.innerText = "No se pudo cargar el archivo"
+    //         state.className = 'text-danger'
+    //       }
+    //     }).catch(err=>{
           
           
-        })
-      })
+    //     })
+    //   })
       
-    }
-    const status = document.getElementById("status")
-    function verify_name(){
-      file_input = document.getElementById('upload')
-      if (file_input.files[0].name != "mapaini.xlsx"){
+    // }
+    // const status = document.getElementById("status")
+    // function verify_name(){
+    //   file_input = document.getElementById('upload')
+    //   if (file_input.files[0].name != "mapaini.xlsx"){
         
-        status.innerText = "El documento debe llamarse mapaini.xlsx"
-        status.style.color = "red"
-        // console.log("El documento debe llamarse mapaini.xlsx")
-      }else{
-        status.innerText = ""
-      }
+    //     status.innerText = "El documento debe llamarse mapaini.xlsx"
+    //     status.style.color = "red"
+    //     // console.log("El documento debe llamarse mapaini.xlsx")
+    //   }else{
+    //     status.innerText = ""
+    //   }
 
-    }
+    // }
     table = document.createElement('table')
     table.className = 'table table-hover table-bordered'
     thead = document.createElement('thead')
