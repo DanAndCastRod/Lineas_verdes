@@ -227,6 +227,27 @@
       }
 
     }
+    table = document.createElement('table')
+    table.className = 'table table-hover table-bordered'
+    thead = document.createElement('thead')
+    thead.className = 'table-dark'
+    thead.innerHTML = `<tr>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Pais</th>
+        </tr>`
+    tbody = document.createElement('tbody')
+    Data.forEach(e=>{
+        tbody.innerHTML+=`<tr>
+            <td>${e.nombre}</td>
+            <td>${e.edad}</td>
+            <td>${e.pais}</td>
+        </tr`
+    })
+    table.appendChild(thead)
+    table.appendChild(tbody)
+    cont = document.querySelectorAll('.container')[1]
+    cont.innerHTML = table.outerHTML
   </script>
 </body>
 
