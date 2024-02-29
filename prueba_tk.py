@@ -1,3 +1,4 @@
+#%%
 from tkinter import *
 from tkinter import messagebox
 
@@ -6,6 +7,8 @@ class Pycalc(Frame):
 
     def __init__(self, master, *args, **kwargs):
         Frame.__init__(self, master, *args, **kwargs)
+        
+
         self.parent = master
         self.grid()
         self.createWidgets()
