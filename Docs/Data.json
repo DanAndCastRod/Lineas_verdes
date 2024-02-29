@@ -1,0 +1,28 @@
+[
+    {
+      "nombre": "Juan",
+      "edad": 28,
+      "pais": "España"
+    },
+    {
+      "nombre": "Ana",
+      "edad": 35,
+      "pais": "México"
+    },
+    {
+      "nombre": "Marco",
+      "edad": 22,
+      "pais": "Italia"
+    },
+    {
+      "nombre": "Luisa",
+      "edad": 30,
+      "pais": "Colombia"
+    },
+    {
+      "nombre": "Carlos",
+      "edad": 27,
+      "pais": "Argentina"
+    }
+  ]
+  
